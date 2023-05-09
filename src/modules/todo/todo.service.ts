@@ -15,15 +15,16 @@ export class TodoService {
     return this.prismaService.todo.create({ data });
   }
 
-  findMany(filter: FilterTodoDto) {
+  async findMany(filter: FilterTodoDto) {
     const { take, skip, ...where } = filter;
 
-    return this.prismaService.todo.findMany({
+    const todos = await this.prismaService.todo.findMany({
       where,
       take,
       skip,
-      orderBy: { title: 'asc' },
     });
+
+    return todos.sort((a, b) => a.title.localeCompare(b.title));
   }
 
   findUnique(id: string) {
