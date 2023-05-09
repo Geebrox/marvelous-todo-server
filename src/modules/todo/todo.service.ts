@@ -1,5 +1,9 @@
 import { PrismaService } from '@modules/prisma/prisma.service';
 import { CreateTodoDto } from '@modules/todo/dto/create-todo.dto';
+import {
+  FilterTodoDto,
+  FilterWithoutPaginationTodoDto,
+} from '@modules/todo/dto/filter-todo.dto';
 import { UpdateTodoDto } from '@modules/todo/dto/update-todo.dto';
 import { Injectable } from '@nestjs/common';
 
@@ -11,11 +15,18 @@ export class TodoService {
     return this.prismaService.todo.create({ data });
   }
 
-  findAll() {
-    return this.prismaService.todo.findMany();
+  findMany(filter: FilterTodoDto) {
+    const { take, skip, ...where } = filter;
+
+    return this.prismaService.todo.findMany({
+      where,
+      take,
+      skip,
+      orderBy: { title: 'asc' },
+    });
   }
 
-  findOne(id: string) {
+  findUnique(id: string) {
     return this.prismaService.todo.findUnique({ where: { id } });
   }
 
@@ -23,11 +34,11 @@ export class TodoService {
     return this.prismaService.todo.update({ where: { id }, data });
   }
 
-  remove(id: string) {
+  delete(id: string) {
     return this.prismaService.todo.delete({ where: { id } });
   }
 
-  removeAll() {
-    return this.prismaService.todo.deleteMany();
+  deleteMany(where: FilterWithoutPaginationTodoDto) {
+    return this.prismaService.todo.deleteMany({ where });
   }
 }

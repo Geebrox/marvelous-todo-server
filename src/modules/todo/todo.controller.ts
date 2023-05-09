@@ -1,5 +1,9 @@
 import { ROUTES } from '@common/constants';
 import { CreateTodoDto } from '@modules/todo/dto/create-todo.dto';
+import {
+  FilterTodoDto,
+  FilterWithoutPaginationTodoDto,
+} from '@modules/todo/dto/filter-todo.dto';
 import { UpdateTodoDto } from '@modules/todo/dto/update-todo.dto';
 import { TodoService } from '@modules/todo/todo.service';
 import {
@@ -10,6 +14,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 
 @Controller(ROUTES.Todos)
@@ -22,13 +27,13 @@ export class TodoController {
   }
 
   @Get()
-  findAll() {
-    return this.todoService.findAll();
+  findMany(@Query() filter: FilterTodoDto) {
+    return this.todoService.findMany(filter);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.todoService.findOne(id);
+  findUnique(@Param('id') id: string) {
+    return this.todoService.findUnique(id);
   }
 
   @Patch(':id')
@@ -37,12 +42,12 @@ export class TodoController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.todoService.remove(id);
+  delete(@Param('id') id: string) {
+    return this.todoService.delete(id);
   }
 
   @Delete()
-  removeAll() {
-    return this.todoService.removeAll();
+  deleteMany(@Query() where: FilterWithoutPaginationTodoDto) {
+    return this.todoService.deleteMany(where);
   }
 }
