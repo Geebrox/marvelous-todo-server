@@ -16,7 +16,7 @@ async function bootstrap() {
     new Adapter({ bodyLimit: 10 * 1024 * 1024 * 1024 })
   );
   const appConfig = app.get<ConfigType<typeof AppConfig>>(AppConfig.KEY);
-  const { port } = appConfig;
+  const { port, clientHost } = appConfig;
 
   app
     .useGlobalPipes(
@@ -31,6 +31,8 @@ async function bootstrap() {
       addToBody: true,
       limits: { fileSize: 10 * 1024 * 1024 },
     });
+
+  app.enableCors({ origin: [clientHost] });
 
   const prismaService: PrismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);

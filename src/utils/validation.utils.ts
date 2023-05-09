@@ -1,5 +1,5 @@
 import { plainToInstance, type ClassConstructor } from 'class-transformer';
-import { IsEnum, validateSync } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString, validateSync } from 'class-validator';
 
 enum Env {
   Development = 'development',
@@ -10,6 +10,7 @@ enum Env {
 
 class EnvVars {
   @IsEnum(Env) NODE_ENV: Env;
+  @IsString() @IsNotEmpty() CLIENT_HOST: string;
 }
 
 export const validateObject = <T>(type: ClassConstructor<T>, obj = {}) => {
