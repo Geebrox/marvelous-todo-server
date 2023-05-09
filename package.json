@@ -1,0 +1,65 @@
+{
+  "name": "marvelous-todo-server",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Server for Todo app",
+  "license": "MIT",
+  "author": {
+    "name": "bek",
+    "email": "geebrox@gmail.com",
+    "url": "https://github.com/geebrox"
+  },
+  "scripts": {
+    "build": "cross-env NODE_ENV=production yarn with-env nest build",
+    "db:generate": "yarn db:merge && yarn with-env prisma generate",
+    "db:merge": "rimraf ./prisma/schema.prisma && prisma-import -fo ./prisma/schema.prisma  -s \"./prisma/**/*.prisma\"",
+    "db:push": "yarn with-env prisma db push --skip-generate",
+    "dev": "cross-env NODE_ENV=development yarn with-env nest start --watch",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "postinstall": "yarn db:generate",
+    "lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix",
+    "start": "cross-env NODE_ENV=production yarn with-env node dist/main",
+    "with-env": "dotenv -e ./.env --"
+  },
+  "dependencies": {
+    "@fastify/multipart": "^7.6.0",
+    "@nestjs/common": "^9.4.0",
+    "@nestjs/config": "^2.3.1",
+    "@nestjs/core": "^9.4.0",
+    "@nestjs/mapped-types": "^1.2.2",
+    "@nestjs/platform-fastify": "^9.4.0",
+    "@prisma/client": "^4.14.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^9.4.2",
+    "@nestjs/schematics": "^9.1.0",
+    "@types/node": "20.1.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.5",
+    "@typescript-eslint/parser": "^5.59.5",
+    "cross-env": "^7.0.3",
+    "dotenv-cli": "^7.2.1",
+    "eslint": "^8.40.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "fastify": "^4.17.0",
+    "prettier": "^2.8.8",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "prisma": "^4.14.0",
+    "prisma-import": "^1.0.4",
+    "rimraf": "^5.0.0",
+    "source-map-support": "^0.5.21",
+    "ts-loader": "^9.4.2",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "4.2.0",
+    "typescript": "^5.0.4",
+    "webpack": "^5.82.0"
+  },
+  "packageManager": "yarn@1.22.19",
+  "engines": {
+    "node": ">=18.16.0"
+  }
+}

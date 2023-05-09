@@ -1,0 +1,9 @@
+model Todo {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  title      String
+  isFinished Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  finishedAt DateTime?
+
+  @@map("todos")
+}

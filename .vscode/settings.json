@@ -1,0 +1,10 @@
+{
+  "[prisma]": { "editor.defaultFormatter": "ajmnz.prisma-import" },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.quickSuggestions": { "strings": true },
+  "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
+  "material-icon-theme.activeIconPack": "nest",
+  "prisma.import.exclude": ["**/prisma/schema.prisma"],
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
