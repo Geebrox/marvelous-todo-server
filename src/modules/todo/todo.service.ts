@@ -22,6 +22,7 @@ export class TodoService {
       where,
       take,
       skip,
+      orderBy: { finishedAt: 'desc' },
     });
 
     return todos.sort((a, b) => a.title.localeCompare(b.title));
